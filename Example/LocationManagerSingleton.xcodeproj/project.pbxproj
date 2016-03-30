@@ -12,6 +12,7 @@
 		17D0AA691CAC507E004FAF8C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17D0AA671CAC507E004FAF8C /* Main.storyboard */; };
 		17D0AA6B1CAC507E004FAF8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17D0AA6A1CAC507E004FAF8C /* Assets.xcassets */; };
 		17D0AA6E1CAC507E004FAF8C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17D0AA6C1CAC507E004FAF8C /* LaunchScreen.storyboard */; };
+		17D0AA761CAC50A5004FAF8C /* UserLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D0AA751CAC50A5004FAF8C /* UserLocationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		17D0AA6A1CAC507E004FAF8C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		17D0AA6D1CAC507E004FAF8C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		17D0AA6F1CAC507E004FAF8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		17D0AA751CAC50A5004FAF8C /* UserLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserLocationManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 				17D0AA6A1CAC507E004FAF8C /* Assets.xcassets */,
 				17D0AA6C1CAC507E004FAF8C /* LaunchScreen.storyboard */,
 				17D0AA6F1CAC507E004FAF8C /* Info.plist */,
+				17D0AA751CAC50A5004FAF8C /* UserLocationManager.swift */,
 			);
 			path = LocationManagerSingleton;
 			sourceTree = "<group>";
@@ -138,6 +141,7 @@
 			files = (
 				17D0AA661CAC507E004FAF8C /* ViewController.swift in Sources */,
 				17D0AA641CAC507E004FAF8C /* AppDelegate.swift in Sources */,
+				17D0AA761CAC50A5004FAF8C /* UserLocationManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
