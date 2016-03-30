@@ -29,18 +29,28 @@ class ViewController: UIViewController, LocationUpdateProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "locationUpdateNotification:", name: kLocationDidChangeNotification, object: nil)
+
         let LocationMgr = UserLocationManager.SharedManager
         LocationMgr.delegate = self
         
+    }
+    
+    func locationUpdateNotification(notification: NSNotification) {
+        let userinfo = notification.userInfo
+        self.currentLocation = userinfo!["location"] as! CLLocation
+        print("Latitude : \(self.currentLocation.coordinate.latitude)")
+        print("Longitude : \(self.currentLocation.coordinate.longitude)")
+
     }
 
     // MARK: - LocationUpdateProtocol
     
     func locationDidUpdateToLocation(location: CLLocation) {
         currentLocation = location
-        print(currentLocation)
-
+        print("Latitude : \(self.currentLocation.coordinate.latitude)")
+        print("Longitude : \(self.currentLocation.coordinate.longitude)")
     }
     
 

@@ -26,6 +26,8 @@ protocol LocationUpdateProtocol {
     func locationDidUpdateToLocation(location : CLLocation)
 }
 
+/// Notification on update of location. UserInfo contains CLLocation for key "location"
+let kLocationDidChangeNotification = "LocationDidChangeNotification"
 
 class UserLocationManager: NSObject, CLLocationManagerDelegate {
     
@@ -49,11 +51,13 @@ class UserLocationManager: NSObject, CLLocationManagerDelegate {
     // MARK: - CLLocationManagerDelegate
     
     func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
-        if currentLocation == nil {
-            currentLocation = locationManager.location
+        currentLocation = newLocation
+        let userInfo : NSDictionary = ["location" : currentLocation!]
+
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            self.delegate.locationDidUpdateToLocation(self.currentLocation!)
+            NSNotificationCenter.defaultCenter().postNotificationName(kLocationDidChangeNotification, object: self, userInfo: userInfo as [NSObject : AnyObject])
         }
-        currentLocation = newLocation;
-        self.delegate.locationDidUpdateToLocation(currentLocation!)
     }
     
 }
