@@ -7,35 +7,40 @@
       func locationDidUpdateToLocation(location : CLLocation)
     }
 
+    /// Notification on update of location. UserInfo contains CLLocation for key "location"
+    let kLocationDidChangeNotification = "LocationDidChangeNotification"
 
     class UserLocationManager: NSObject, CLLocationManagerDelegate {
-    
-      static let SharedManager = UserLocationManager()
-    
-      private var locationManager = CLLocationManager()
-    
-      var currentLocation : CLLocation?
-    
-      var delegate : LocationUpdateProtocol!
-    
-      private override init () {
-          super.init()
-          self.locationManager.delegate = self
-          self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-          self.locationManager.distanceFilter = kCLLocationAccuracyHundredMeters
-          locationManager.requestAlwaysAuthorization()
-          self.locationManager.startUpdatingLocation()
-      }
-    
-      // MARK: - CLLocationManagerDelegate
-      func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
-          if currentLocation == nil {
-              currentLocation = locationManager.location
-          }
-          currentLocation = newLocation;
-          self.delegate.locationDidUpdateToLocation(currentLocation!)
-      }
-    
+
+        static let SharedManager = UserLocationManager()
+
+        private var locationManager = CLLocationManager()
+
+        var currentLocation : CLLocation?
+
+        var delegate : LocationUpdateProtocol!
+
+        private override init () {
+            super.init()
+            self.locationManager.delegate = self
+            self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            self.locationManager.distanceFilter = kCLLocationAccuracyHundredMeters
+            locationManager.requestAlwaysAuthorization()
+            self.locationManager.startUpdatingLocation()
+        }
+
+        // MARK: - CLLocationManagerDelegate
+
+        func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
+            currentLocation = newLocation
+            let userInfo : NSDictionary = ["location" : currentLocation!]
+
+            dispatch_async(dispatch_get_main_queue()) { () -> Void in
+                self.delegate.locationDidUpdateToLocation(self.currentLocation!)
+                NSNotificationCenter.defaultCenter().postNotificationName(kLocationDidChangeNotification, object: self, userInfo: userInfo as [NSObject : AnyObject])
+            }
+        }
+
     }
 
 ##Usage:
@@ -53,6 +58,18 @@ Implement the proctocol - LocationUpdateProtocol
         print(currentLocation)
     }
     
+or you can choose to receive the notifications
+
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: "locationUpdateNotification:", name: kLocationDidChangeNotification, object: nil)
+
+Also add the following Keys to your info.plist
+
+    NSLocationAlwaysUsageDescription
+    NSLocationWhenInUseUsageDescription
+
+#Contribution:
+
+Any contribution is welcome. Just submit a pull request.
     
 #Copyright and License
 The source code is released under the MIT License (MIT).

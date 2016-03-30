@@ -37,6 +37,8 @@ class ViewController: UIViewController, LocationUpdateProtocol {
         
     }
     
+    // MARK: - Notifications
+
     func locationUpdateNotification(notification: NSNotification) {
         let userinfo = notification.userInfo
         self.currentLocation = userinfo!["location"] as! CLLocation
